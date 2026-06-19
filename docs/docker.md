@@ -80,11 +80,13 @@ Las principales ventajas de este enfoque son:
 En este proyecto, Docker permite trabajar con ROSpug en un entorno controlado y reproducible, sin depender de la versión del sistema operativo del equipo.
 
 
-# 3. Creación y uso del entorno Docker (Ubuntu 20.04 + ROS Noetic)
+# 3. Creación del entorno Docker (Ubuntu 20.04 + ROS Noetic)
 
 Esta sección describe el flujo completo para construir y ejecutar un contenedor Docker funcional con Ubuntu 20.04 y ROS Noetic, listo para desarrollo con ROSpug.
 
 El objetivo es obtener un entorno reproducible que funcione independientemente del sistema operativo del host.
+
+---
 
 ## 3.1 Crear estructura de trabajo
 
@@ -191,10 +193,51 @@ xhost +local:docker
 
 ## 3.6 Crear workspace ROS dentro del contenedor
 
-Dentro del container:
+Dentro del contenedor:
 
 ```bash
 mkdir -p ~/rospug_ws/src
 cd ~/rospug_ws
 catkin_make
+```
+
+## 3.7 Instalar dependencias del ROSpug
+
+Clonar el repositorio del rospug (https://github.com/Hiwonder/ROSpug):
+
+```bash
+cd ~/rospug_ws/src
+git clone https://github.com/hiwonder/ROSPug.git
+```
+
+Luego:
+
+```bash
+cd ~/rospug_ws
+rosdep install --from-paths src --ignore-src -r -y
+catkin_make
+```
+
+
+# 4. Uso del entorno Docker
+
+Una vez creado el contenedor, existen dos formas típicas de trabajar: iniciar uno nuevo o reanudar uno existente.
+
+---
+
+## 4.1 Entrar al contenedor (si ya está creado)
+
+Si el contenedor existe pero está detenido:
+
+```bash
+docker start rospug_noetic
+# levanta el contenedor si estaba detenido
+docker exec -it rospug_noetic bash
+# abre una terminal interactiva dentro del contenedor en ejecución
+```
+
+Para ver los contenedores disponibles:
+
+```bash
+docker ps -a
 ```
