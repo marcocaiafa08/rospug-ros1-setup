@@ -1,30 +1,50 @@
-# ¿Qué es Docker?
+## 1. ¿Qué es Docker?
 
 Docker es una plataforma que permite ejecutar aplicaciones dentro de entornos aislados llamados contenedores.
 
-Un contenedor incluye el sistema operativo, las bibliotecas y las dependencias necesarias para ejecutar una aplicación de forma consistente en diferentes equipos. Esto permite reproducir el mismo entorno de trabajo independientemente de la configuración del sistema anfitrión.
+Un contenedor es un entorno de ejecución aislado que permite correr una aplicación junto con todo lo que necesita para funcionar (librerías, dependencias y configuración básica). La idea es que la aplicación se comporte igual sin importar en qué computadora se ejecute.
 
-En este proyecto, Docker se utiliza para ejecutar Ubuntu 20.04 con ROS Noetic sobre sistemas operativos más recientes. De esta forma es posible trabajar con ROSpug sin necesidad de instalar Ubuntu 20.04 como sistema principal.
+A diferencia de una máquina virtual, un contenedor no incluye un sistema operativo completo ni simula hardware. En cambio, utiliza el sistema operativo del equipo donde se ejecuta, lo que lo hace más liviano y rápido.
 
-Desde el punto de vista del usuario, el contenedor actúa como una máquina Ubuntu 20.04 dedicada exclusivamente al desarrollo con ROS1.
+Desde el punto de vista del usuario, un contenedor se puede entender como un entorno de trabajo cerrado donde todo está preparado para una aplicación específica, sin interferir con el resto del sistema.
 
-# ¿Por qué utilizar Docker?
+En este proyecto, Docker se utiliza para ejecutar un entorno basado en Ubuntu 20.04 con ROS Noetic sobre sistemas operativos más recientes. Esto permite trabajar con ROSpug sin necesidad de instalar Ubuntu 20.04 como sistema principal.
 
-El robot ROSpug está desarrollado sobre ROS Noetic (ROS1), por lo que su software oficial depende de un entorno compatible con esta distribución.
+En la práctica, el contenedor funciona como un entorno de desarrollo listo para usar, manteniendo compatibilidad con ROS1 sin modificar el sistema operativo del equipo.
 
-Uno de los principales inconvenientes es que ROS Noetic fue diseñado para Ubuntu 20.04 y es la última versión oficial de ROS1. Las versiones más recientes de Ubuntu ya no ofrecen soporte completo para ROS1 y están orientadas al uso de ROS2.
 
-Aunque ROS2 es el sucesor de ROS1, el software proporcionado para ROSpug no dispone actualmente de soporte oficial para ROS2. Como consecuencia, intentar ejecutar el entorno del robot directamente sobre sistemas modernos puede generar problemas de compatibilidad con paquetes, dependencias y herramientas de desarrollo.
+## 2. ¿Por qué utilizar Docker?
 
-Docker permite resolver este problema mediante la ejecución de un entorno Ubuntu 20.04 completamente aislado dentro del sistema anfitrión. De esta forma es posible utilizar ROS Noetic en equipos con versiones más recientes de Ubuntu sin necesidad de modificar el sistema operativo principal.
+El robot ROSpug está desarrollado sobre ROS Noetic (ROS1), que depende de un entorno específico basado en Ubuntu 20.04.
+
+El problema es que este entorno no es compatible de forma nativa con versiones más recientes de Ubuntu, como 24.04, que además están orientadas principalmente a ROS2. Esto genera conflictos de instalación y dependencias si se intenta trabajar directamente sobre el sistema operativo del equipo.
+
+Docker resuelve este problema permitiendo ejecutar un entorno Ubuntu 20.04 aislado dentro del sistema principal. De esta forma, es posible usar ROS Noetic sin modificar el sistema operativo del host ni degradar el sistema a una versión antigua.
 
 Las principales ventajas de este enfoque son:
 
-* Mantener ROS Noetic funcionando en sistemas operativos modernos.
-* Evitar conflictos entre dependencias de ROS1 y otros programas instalados en el equipo.
-* Reproducir fácilmente el mismo entorno de desarrollo en diferentes computadoras.
-* Facilitar la instalación y actualización del entorno de trabajo.
-* Preservar el sistema anfitrión sin realizar cambios permanentes.
+- Mantener ROS Noetic funcional en sistemas modernos.
+- Evitar conflictos de dependencias con otros programas del sistema.
+- Reproducir fácilmente el mismo entorno en distintas computadoras.
+- Simplificar la instalación y el setup del proyecto.
+- Mantener el sistema operativo principal limpio y sin cambios permanentes.
 
-En este proyecto se utiliza Docker para ejecutar un entorno Ubuntu 20.04 con ROS Noetic, permitiendo desarrollar, simular y controlar ROSpug desde una computadora que no dispone de soporte nativo para ROS1.
+En este proyecto, Docker permite trabajar con ROSpug en un entorno controlado y reproducible, sin depender de la versión del sistema operativo del equipo.
 
+
+## 3. Creación y uso del entorno Docker (Ubuntu 20.04 + ROS Noetic)
+
+Esta sección describe el flujo completo para construir y ejecutar un contenedor Docker funcional con Ubuntu 20.04 y ROS Noetic, listo para desarrollo con ROSpug.
+
+El objetivo es obtener un entorno reproducible que funcione independientemente del sistema operativo del host.
+
+---
+
+### 3.1 Construcción de la imagen
+
+La imagen Docker define el sistema base del contenedor (Ubuntu 20.04) junto con todas las dependencias necesarias, incluyendo ROS Noetic.
+
+Para construir la imagen:
+
+```bash
+docker build -t rospug:noetic .
