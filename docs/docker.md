@@ -40,11 +40,17 @@ El objetivo es obtener un entorno reproducible que funcione independientemente d
 
 ---
 
-### 3.1 Construcción de la imagen
+### 3.0. Prerrequisitos
 
-La imagen Docker define el sistema base del contenedor (Ubuntu 20.04) junto con todas las dependencias necesarias, incluyendo ROS Noetic.
+Antes de crear y ejecutar el entorno Docker, es necesario verificar que el sistema host tiene instalado Docker correctamente.
 
-Para construir la imagen:
+Esta guía está pensada para un sistema Ubuntu 24.04, pero los pasos son equivalentes en otras distribuciones Linux compatibles.
+
+---
+
+### 3.0.1 Verificar instalación de Docker
+
+Comprobar que Docker está instalado:
 
 ```bash
-docker build -t rospug:noetic .
+docker --version
