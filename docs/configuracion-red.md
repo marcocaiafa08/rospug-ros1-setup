@@ -1,5 +1,9 @@
 # 5. Comunicación entre la PC y el robot
 
+Antes de empezar a trabajar con ROSpug es necesario establecer correctamente la comunicacion entre la PC y el robot.
+
+---
+
 ## 5.1 ¿Por qué es necesaria esta configuración?
 
 ROS permite que distintos programas intercambien información mediante una red.
@@ -15,21 +19,26 @@ Una vez completada esta configuración debería ser posible:
 
 ## 5.2 Conectar la PC a la red Wi-Fi del robot
 
-El primer paso es conectarse desde la PC directamente a la red Wi-Fi del robot. Una vez que el robot se inicie correctamente, generará una red WiFi que comenzará con la letra "HW" y la contraseña inicial será "hiwonder".
+El primer paso es conectarse desde la PC directamente a la red Wi-Fi del robot. 
+
+Una vez que el robot se inicie correctamente, generará una red WiFi que comenzará con la letra "HW" y la contraseña inicial será "hiwonder".
 
 ## 5.3 Verificar la dirección IP del robot
 
 Conectarse por SSH:
 
-
+```bash
 ssh ubuntu@<IP_DEL_ROBOT>
+```
 
-o el usuario que corresponda.
+Para obtener la IP del robot:
 
-Mostrar cómo averiguar la IP:
-
+```bash
 hostname -I
+```
 
-o
+o bien:
 
+```bash
 ip addr
+```
