@@ -1,20 +1,20 @@
-# Instalación de ROS Noetic en Ubuntu 20.04 sobre VirtualBox
+# 5. Instalación de ROS Noetic en Ubuntu 20.04 sobre VirtualBox
 
-## Descripción
+## 5.1 Descripción
 
 Este documento describe el procedimiento completo para crear una máquina virtual Ubuntu 20.04 utilizando Oracle VM VirtualBox e instalar ROS Noetic, incluyendo recomendaciones de configuración de red y optimización gráfica para simulación.
 
 ---
 
-# Requisitos
+## 5.2 Requisitos
 
-## Software necesario
+## 5.3 Software necesario
 
 * Oracle VM VirtualBox
 * Imagen ISO de Ubuntu 20.04 LTS (64 bits)
 * Conexión a Internet
 
-## Hardware recomendado
+## 5.4 Hardware recomendado
 
 | Recurso | Recomendado                   |
 | ------- | ----------------------------- |
@@ -25,7 +25,7 @@ Este documento describe el procedimiento completo para crear una máquina virtua
 
 ---
 
-# Descarga de Ubuntu 20.04
+# 5.6 Descarga de Ubuntu 20.04
 
 Descargar la imagen ISO oficial:
 
@@ -39,9 +39,9 @@ ubuntu-20.04.x-desktop-amd64.iso
 
 ---
 
-# Creación de la Máquina Virtual
+# 6. Creación de la Máquina Virtual
 
-## 1. Crear nueva máquina
+## 6.1 Crear nueva máquina
 
 En VirtualBox:
 
@@ -67,7 +67,7 @@ Disco duro: 40 GB dinámico
 
 ---
 
-# Configuración de Red
+## 6.2 Configuración de Red
 
 Una vez creada la máquina virtual:
 
@@ -116,7 +116,7 @@ la máquina virtual obtiene una dirección IP dentro de la misma red que el robo
 
 ---
 
-# Instalación de Ubuntu
+## 6.3 Instalación de Ubuntu
 
 Iniciar la máquina virtual utilizando la ISO descargada.
 
@@ -139,9 +139,7 @@ Reiniciar la máquina.
 
 ---
 
-# Instalación de ROS Noetic
-
-## Configurar repositorios
+## 6.4 Instalación de ROS Noetic
 
 Agregar el repositorio oficial de ROS:
 
@@ -161,9 +159,6 @@ sudo apt update
 ```
 
 ---
-
-## Instalar ROS Noetic Desktop Full
-
 ```bash
 sudo apt install ros-noetic-desktop-full -y
 ```
@@ -179,7 +174,7 @@ Este paquete incluye:
 
 ---
 
-## Inicializar rosdep
+## 6.5 Inicializar rosdep
 
 ```bash
 sudo apt install python3-rosdep -y
@@ -190,7 +185,7 @@ rosdep update
 
 ---
 
-## Configurar variables de entorno
+## 6.6 Configurar variables de entorno
 
 Agregar ROS al shell:
 
@@ -201,7 +196,7 @@ source ~/.bashrc
 
 ---
 
-# Verificación de la instalación
+## 6.7 Verificación de la instalación
 
 Verificar versión:
 
@@ -236,36 +231,9 @@ Resultado mínimo esperado:
 
 ---
 
-# Conexión con un Robot Real
+# 7 Problemas Frecuentes
 
-Una vez conectado a la misma red que el robot:
-
-Verificar conectividad:
-
-```bash
-ping <IP_DEL_ROBOT>
-```
-
-Comprobar los topics publicados:
-
-```bash
-rostopic list
-```
-
-Ejemplo:
-
-```text
-/cmd_vel
-/scan
-/odom
-/tf
-```
-
----
-
-# Problemas Frecuentes
-
-## No aparecen los topics del robot
+## 7.1 No aparecen los topics del robot
 
 ### Causa más común
 
@@ -305,36 +273,15 @@ Iniciar nuevamente la máquina virtual.
 
 ---
 
-## Verificar dirección IP
 
-```bash
-ip addr
-```
 
-o
-
-```bash
-hostname -I
-```
-
-La IP obtenida debe pertenecer al mismo segmento de red que el robot.
-
-Ejemplo:
-
-```text
-Robot: 192.168.1.50
-VM:    192.168.1.100
-```
-
----
-
-# Optimización para Gazebo y SLAM
+# 8 Optimización para Gazebo y SLAM
 
 Las máquinas virtuales presentan limitaciones gráficas importantes debido a la virtualización de la GPU.
 
 Para mejorar el rendimiento:
 
-## Memoria de Video
+## 8.1 Memoria de Video
 
 Ir a:
 
@@ -350,7 +297,7 @@ Memoria de video: Máximo permitido
 
 ---
 
-## Aceleración 3D
+## 8.2 Aceleración 3D
 
 Habilitar:
 
@@ -362,7 +309,7 @@ Configuración → Pantalla
 
 ---
 
-## Beneficios
+## 8.3 Beneficios
 
 Estas configuraciones mejoran el desempeño de:
 
@@ -375,7 +322,7 @@ Estas configuraciones mejoran el desempeño de:
 
 ---
 
-# Consideraciones de Rendimiento
+## 8.4 Consideraciones de Rendimiento
 
 Incluso con aceleración 3D habilitada:
 

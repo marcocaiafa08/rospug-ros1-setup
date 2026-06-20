@@ -1,10 +1,10 @@
-# 5. Conexion de red con ROSpug
+# 9. Conexion de red con ROSpug
 
 Antes de empezar a trabajar con ROSpug es necesario establecer correctamente la comunicacion entre la PC y el robot.
 
 ---
 
-## 5.1 ¿Por qué es necesaria esta configuración?
+## 9.1 ¿Por qué es necesaria esta configuración?
 
 ROS permite que distintos programas intercambien información mediante una red.
 
@@ -17,49 +17,34 @@ Una vez completada esta configuración debería ser posible:
 - Utilizar herramientas como RViz.
 - Ejecutar programas ROS desde la computadora que interactúen con ROSPug.
 
-## 5.2 Conectar la PC a la red Wi-Fi del robot
+## 9.2 Conectar la PC a la red Wi-Fi del robot
 
 El primer paso es conectarse desde la PC directamente a la red Wi-Fi del robot. 
 
 Una vez que el robot se inicie correctamente, generará una red WiFi que comenzará con la letra "HW" y la contraseña inicial será "hiwonder".
 
-## 5.3 Verificar la dirección IP del robot
+## 9.3 Conexion remota con el robot
 
 Conectarse por SSH:
 
 ```bash
-ssh ubuntu@<IP_DEL_ROBOT>
+ssh hiwonder@192.168.149.1
 ```
 
-Para obtener la IP del robot:
+La contraseña predeterminada es hiwonder.
 
-```bash
-hostname -I
-```
 
-o bien:
-
-```bash
-ip addr
-```
-
-Para comprobar si existe conectividad de red entre tu equipo y el robot:
-
-```bash
-ping <IP_DEL_ROBOT>
-```
-
-# 6. Configuración de ROS para comunicación remota
+# 10. Configuración de ROS para comunicación remota
 
 Una vez que la computadora y el robot pueden comunicarse a través de la red, es necesario configurar ROS para que ambos sistemas puedan intercambiar mensajes.
 
 ---
 
-## 6.1 ¿Qué es el ROS Master?
+## 10.1 ¿Qué es el ROS Master?
 
 El ROS Master actúa como un punto de encuentro para los nodos ROS. Antes de intercambiar mensajes, los nodos consultan al Master para descubrir dónde se encuentran los demás participantes del sistema.
 
-## 6.2 Configurar la PC para utilizar el ROS Master del robot
+## 10.2 Configurar la PC para utilizar el ROS Master del robot
 
 Una vez que la computadora y el robot se encuentran conectados a la misma red, es necesario indicar a ROS dónde se encuentra el ROS Master que coordina la comunicación entre nodos.
 
@@ -68,7 +53,7 @@ En ROSPug, el ROS Master se ejecuta en el propio robot. Por lo tanto, la computa
 configurar las siguientes variables de entorno en la computadora:
 
 ```bash
-export ROS_MASTER_URI=http://<IP_DEL_ROBOT>:11311
+export ROS_MASTER_URI=http://192.168.149.1:11311
 export ROS_IP=<IP_PC>
 unset ROS_HOSTNAME
 ```
@@ -81,7 +66,7 @@ ROS_HOSTNAME se elimina para evitar posibles conflictos de resolución de nombre
 
 Estas variables solo afectan a la terminal actual.
 
-## 6.3 Reiniciar el entorno ROS del robot
+## 10.3 Reiniciar el entorno ROS del robot
 
 Durante las pruebas realizadas con ROSPug se observó que, en algunos casos, el robot inicia automáticamente procesos ROS durante el arranque utilizando una configuración de red distinta a la deseada.
 
@@ -107,7 +92,7 @@ El procedimiento realiza las siguientes acciones:
 - Detiene el ROS Master que pudiera estar ejecutándose.
 - Inicia nuevamente los nodos principales de ROSPug con la nueva configuración.
 
-## 6.4 Verificar la conexión ROS
+## 10.4 Verificar la conexión ROS
 
 Una vez configurada la computadora y reiniciado el entorno ROS del robot, es posible comprobar que la comunicación funciona correctamente.
 
@@ -128,7 +113,7 @@ En caso contrario, verificar nuevamente:
 - El entorno ROS del robot se haya reiniciado correctamente.
 - No existen errores de conectividad de red entre ambos dispositivos.
 
-## 6.5 Verificar el intercambio de mensajes
+## 10.5 Verificar el intercambio de mensajes
 
 La aparición de tópicos en rostopic list indica que la computadora puede comunicarse con el ROS Master del robot. Sin embargo, es recomendable realizar una prueba adicional para verificar que el intercambio de mensajes entre ambos dispositivos funciona correctamente.
 
