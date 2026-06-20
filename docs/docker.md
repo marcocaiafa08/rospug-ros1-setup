@@ -168,7 +168,15 @@ docker build -t rospug_noetic .
 
 Esto puede tardar varios minutos.
 
-## 3.4 Ejecutar contenedor correctamente (modo desarrollo ROS)
+## 3.5 Permitir GUI (para usar RViz/Gazeb)
+
+En el host:
+
+```bash
+xhost +local:docker
+```
+
+## 3.5 Ejecutar contenedor correctamente (modo desarrollo ROS)
 
 Este punto es crítico para ROS
 
@@ -183,22 +191,12 @@ docker run -it \
     rospug_noetic
 ```
 
-## 3.5 Permitir GUI (para usar RViz/Gazeb)
-
-En el host:
-
-```bash
-xhost +local:docker
-```
-
 ## 3.6 Crear workspace ROS dentro del contenedor
 
 Dentro del contenedor:
 
 ```bash
 mkdir -p ~/rospug_ws/src
-cd ~/rospug_ws
-catkin_make
 ```
 
 ## 3.7 Instalar dependencias del ROSpug
@@ -232,6 +230,7 @@ Si el contenedor existe pero está detenido:
 ```bash
 docker start rospug_noetic
 # levanta el contenedor si estaba detenido
+
 docker exec -it rospug_noetic bash
 # abre una terminal interactiva dentro del contenedor en ejecución
 ```
