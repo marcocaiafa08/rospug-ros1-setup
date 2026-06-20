@@ -169,7 +169,7 @@ docker build -t rospug_noetic .
 
 Esto puede tardar varios minutos.
 
-## 3.5 Permitir GUI (para usar RViz/Gazeb)
+## 3.4 Permitir GUI (para usar RViz/Gazeb)
 
 En el host:
 
@@ -192,7 +192,7 @@ docker run -it \
     rospug_noetic
 ```
 
-## 3.6 Crear workspace ROS dentro del contenedor
+## 3.6 Preparar el workspace ROS
 
 Dentro del contenedor:
 
@@ -206,7 +206,7 @@ Clonar el repositorio del rospug (https://github.com/Hiwonder/ROSpug):
 
 ```bash
 cd ~/rospug_ws/src
-git clone https://github.com/Hiwonder/ROSPug.git
+git clone https://github.com/Hiwonder/ROSpug.git
 ```
 
 Antes de seguir asegurarse de que ROS este listo para usar:
