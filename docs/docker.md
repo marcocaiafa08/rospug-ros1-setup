@@ -208,6 +208,12 @@ cd ~/rospug_ws/src
 git clone https://github.com/hiwonder/ROSPug.git
 ```
 
+Antes de seguir asegurarse de que ROS este listo para usar:
+
+```bash
+source /opt/ros/noetic/setup.bash
+```
+
 Luego:
 
 ```bash
@@ -240,3 +246,20 @@ Para ver los contenedores disponibles:
 ```bash
 docker ps -a
 ```
+
+## 4.2 Sourcear ROS
+
+Una vez dentro del contenedor:
+
+```bash
+source /opt/ros/noetic/setup.bash
+source ~/rospug_ws/devel/setup.bash
+```
+
+Es recomendable automatizar este paso:
+
+```bash
+echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
+echo "source ~/rospug_ws/devel/setup.bash" >> ~/.bashrc
+```
+
