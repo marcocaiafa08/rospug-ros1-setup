@@ -91,6 +91,7 @@ El objetivo es obtener un entorno reproducible que funcione independientemente d
 ## 3.1 Crear estructura de trabajo
 
 ```bash
+mkdir -p ~/rospug_ws
 mkdir -p rospug_docker
 cd rospug_docker
 ```
@@ -130,7 +131,7 @@ ENV LC_ALL=en_US.UTF-8
 # 3. Agregar repositorio ROS Noetic
 RUN apt update && apt install -y software-properties-common && \
     add-apt-repository universe && \
-    curl -sSL http://repo.ros2.org/repos.key | apt-key add - || true
+    apt update
 
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu focal main" > /etc/apt/sources.list.d/ros-noetic.list'
 
@@ -205,21 +206,21 @@ Clonar el repositorio del rospug (https://github.com/Hiwonder/ROSpug):
 
 ```bash
 cd ~/rospug_ws/src
-git clone https://github.com/hiwonder/ROSPug.git
+git clone https://github.com/Hiwonder/ROSPug.git
 ```
 
 Antes de seguir asegurarse de que ROS este listo para usar:
 
 ```bash
 source /opt/ros/noetic/setup.bash
-```
 
-Luego:
+rosdep update
 
-```bash
 cd ~/rospug_ws
 rosdep install --from-paths src --ignore-src -r -y
 catkin_make
+
+source devel/setup.bash
 ```
 
 
@@ -246,6 +247,10 @@ Para ver los contenedores disponibles:
 ```bash
 docker ps -a
 ```
+
+El contenedor solo necesita crearse una vez. En usos posteriores basta con iniciarlo mediante docker start y acceder con docker exec. 
+
+No es necesario volver a ejecutar el comando docker run.
 
 ## 4.2 Sourcear ROS
 
