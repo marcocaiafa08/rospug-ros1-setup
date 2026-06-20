@@ -268,3 +268,17 @@ echo "source /opt/ros/noetic/setup.bash" >> ~/.bashrc
 echo "source ~/rospug_ws/devel/setup.bash" >> ~/.bashrc
 ```
 
+## 4.3 Salir del contenedor
+
+Para cerrar la terminal actual y salir del contenedor:
+
+```bash
+exit
+```
+
+o bien:
+
+```bash
+Ctrl + D
+```
+Esto no elimina el contenedor ni los archivos almacenados en el workspace. El entorno podrá volver a utilizarse más adelante.
