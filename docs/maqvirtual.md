@@ -389,23 +389,3 @@ Para proyectos intensivos en simulación se recomienda:
 * Utilizar una estación de trabajo con GPU dedicada.
 * Utilizar Docker sobre Linux nativo.
 
----
-
-# Docker (Próximamente)
-
-Esta sección contendrá:
-
-* Instalación de Docker.
-* Instalación de imágenes ROS Noetic.
-* Configuración de red para ROS.
-* Acceso a hardware físico desde contenedores.
-* Ejecución de Gazebo y RViz dentro de Docker.
-
----
-
-# Referencias
-
-* Ubuntu 20.04 LTS
-* ROS Noetic Ninjemys
-* Oracle VM VirtualBox
-* ROS Wiki
