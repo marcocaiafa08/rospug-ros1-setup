@@ -1,4 +1,4 @@
-# 5. Comunicación entre la PC y el robot
+# 5. Conexion de red con ROSpug
 
 Antes de empezar a trabajar con ROSpug es necesario establecer correctamente la comunicacion entre la PC y el robot.
 
@@ -42,3 +42,20 @@ o bien:
 ```bash
 ip addr
 ```
+
+Para comprobar si existe conectividad de red entre tu equipo y el robot:
+
+```bash
+ping <IP_DEL_ROBOT>
+```
+
+# 6. Configuración de ROS para comunicación remota
+
+Una vez que la computadora y el robot pueden comunicarse a través de la red, es necesario configurar ROS para que ambos sistemas puedan intercambiar mensajes.
+
+---
+
+## 6.1 ¿Qué es el ROS Master?
+
+El ROS Master actúa como un punto de encuentro para los nodos ROS. Antes de intercambiar mensajes, los nodos consultan al Master para descubrir dónde se encuentran los demás participantes del sistema.
+
