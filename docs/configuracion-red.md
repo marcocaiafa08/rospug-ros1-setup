@@ -66,31 +66,88 @@ ROS_HOSTNAME se elimina para evitar posibles conflictos de resolución de nombre
 
 Estas variables solo afectan a la terminal actual.
 
-## 10.3 Reiniciar el entorno ROS del robot
+## 10.3 Configurar permanentemente la dirección del ROS Master
 
-Durante las pruebas realizadas con ROSPug se observó que, en algunos casos, el robot inicia automáticamente procesos ROS durante el arranque utilizando una configuración de red distinta a la deseada.
+De forma predeterminada, ROSPug configura el entorno ROS para utilizar ```localhost``` como dirección del ROS Master. Esta configuración permite utilizar el robot de forma local, pero impide que otros equipos de la red puedan comunicarse con él.
 
-Como consecuencia, aunque las variables de entorno estén correctamente configuradas, pueden aparecer problemas de comunicación entre la computadora y el robot.
+Para evitar tener que reiniciar manualmente el entorno ROS después de cada encendido, es posible modificar la configuración de inicio del robot para que utilice su dirección IP desde el momento en que arranca.
 
-Si esto ocurre, se recomienda reiniciar el entorno ROS del robot utilizando los siguientes comandos.
+### 10.3.1 Localizar el archivo .hiwonderrc
 
-Desde una terminal en el robot:
+La configuración de red utilizada por ROS durante el arranque del robot se encuentra en el archivo .hiwonderrc.
+
+En la mayoría de las instalaciones este archivo se encuentra en el directorio personal del usuario hiwonder:
+
+```/home/hiwonder/.hiwonderrc```
+
+Si el archivo no se encuentra en esa ubicación, puede localizarse ejecutando:
 
 ```bash
-export ROS_MASTER_URI=http://192.168.149.1:11311
-export ROS_IP=192.168.149.1
-unset ROS_HOSTNAME
-
-pkill -f rosmaster
-
-roslaunch pug_bringup base.launch
+find /home -name ".hiwonderrc" 2>/dev/null
 ```
 
-El procedimiento realiza las siguientes acciones:
+El comando mostrará la ruta completa del archivo. En los pasos siguientes deberá utilizarse la ruta obtenida.
 
-- Configura las variables de entorno ROS del robot.
-- Detiene el ROS Master que pudiera estar ejecutándose.
-- Inicia nuevamente los nodos principales de ROSPug con la nueva configuración.
+### 10.3.2 Modificar el archivo de configuración
+
+Una vez localizada la ruta, abrir el archivo con un editor de texto. Por ejemplo, si el archivo se encuentra en /home/hiwonder/.hiwonderrc:
+
+Desde una terminal en el robot ejecutar:
+
+```bash
+vi /home/hiwonder/.hiwonderrc
+```
+
+Dentro del archivo buscar las siguientes líneas:
+
+```bash
+export ROS_HOSTNAME=localhost
+export ROS_MASTER_URI=http://localhost:11311
+```
+
+Estas líneas fuerzan al robot a utilizar localhost como dirección del ROS Master, impidiendo el acceso desde otros equipos de la red.
+
+Reemplazar las líneas anteriores por:
+
+```bash
+export ROS_HOSTNAME=<IP_DEL_ROBOT>
+export ROS_MASTER_URI=http://<IP_DEL_ROBOT>:11311
+```
+
+Es posible que ya exista una seccion del codigo donde ya se asignan los valores correctamente pero que esta siendo sobreescrita. En ese caso alcanza simplemente con comentar las lineas que correspodnan:
+
+```bash
+# export ROS_HOSTNAME=localhost
+# export ROS_MASTER_URI=http://localhost:11311
+```
+
+Guardar el archivo y salir del editor.
+
+Para editar un archivo con ```vi``` presionar ```i``` para entrar en modo inserción. Una vez hechos los cambios presionar ```esc``` para volver al modo comando y finalmente ```:wq``` para guardar los cambios.
+
+Apagar y volver a encender el robot para que la nueva configuración sea aplicada durante el arranque.
+
+A partir de este momento, el entorno ROS del robot se iniciará utilizando la dirección IP configurada
+
+### 10.3.3 verificar la configuración 
+
+Una vez reiniciado el robot, conectarse nuevamente por SSH y comprobar que las variables de entorno fueron configuradas correctamente.
+
+Ejecutar:
+
+```bash
+echo $ROS_HOSTNAME
+echo $ROS_MASTER_URI
+```
+
+La salida esperada debería ser similar a:
+
+```bash
+<IP_DEL_ROBOT>
+http://<IP_DEL_ROBOT>:11311
+```
+
+Si aún aparece ```localhost```, verificar que el archivo .hiwonderrc fue modificado correctamente y reiniciar nuevamente el robot.
 
 ## 10.4 Verificar la conexión ROS
 
